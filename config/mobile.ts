@@ -1,7 +1,7 @@
 export const menu = {
   open: {
     width: "240px",
-    height: "475px",
+    height: "420px",
     top: "-15px",
     right: "-30px",
     opacity: 1,
@@ -82,10 +82,6 @@ export const links = [
   {
     title: "Projects",
     href: "/projects",
-  },
-  {
-    title: "Blogs",
-    href: "/blog",
   },
   {
     title: "Contact",

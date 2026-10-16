@@ -18,7 +18,7 @@ export default function MobileMenu() {
           variants={menu}
           animate={isActive ? "open" : "closed"}
           initial="closed"
-          className="w-[240px] h-[475px] bg-background rounded-3xl relative transition-colors duration-700"
+          className="w-[240px] h-[420px] bg-background rounded-3xl relative transition-colors duration-700"
         >
           <MobileNav
             isActive={isActive}

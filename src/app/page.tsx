@@ -4,10 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { cn, heroAnim, modelAnim } from "@/lib/utils";
 import { motion } from "framer-motion";
 import React, { Suspense, useEffect } from "react";
-import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import Loader from "../components/Loader";
-import KeyBoardHR from "../components/Keyboard";
+import KeyboardCanvas from "../components/KeyboardCanvas";
 import TextRevealByWord from "../components/ui/magicui/TextReveal";
 import Link from "next/link";
 import ResumeButton from "../components/Resume";
@@ -54,29 +51,7 @@ export default function MainPage() {
           transition={modelAnim.transition}
           className="w-full sm:[340px] md:h-[45vw] lg:h-[384px] lg:w-[478px] xl:w-[570px] xl:h-[600px] h-[40vh]"
         >
-          <Suspense fallback={<Loader />}>
-            <Canvas className="w-full h-full">
-              <KeyBoardHR />
-              <OrbitControls
-                enablePan={false}
-                enableZoom={false}
-                autoRotate={true}
-              />
-              <directionalLight position={[Math.sqrt(3), 0, 1]} intensity={2} />
-              <directionalLight
-                position={[-Math.sqrt(3), 0, 1]}
-                intensity={2}
-              />
-              <directionalLight
-                position={[Math.sqrt(3), -1, -1]}
-                intensity={0.9}
-              />
-              <directionalLight
-                position={[-Math.sqrt(3), -1, -1]}
-                intensity={0.9}
-              />
-            </Canvas>
-          </Suspense>
+          <KeyboardCanvas />
         </motion.div>
 
         {/* -------- Intro Content -------- */}

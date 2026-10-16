@@ -12,10 +12,6 @@ export const siteConfig = {
       href: "/projects",
     },
     {
-      title: "Blogs",
-      href: "/blog",
-    },
-    {
       title: "Contact",
       href: "/contact",
     },
@@ -62,57 +58,28 @@ export const siteConfig = {
     {
       title: "ResumeTailor",
       brief:
-        "AI Resume Tailoring Platform built on Render that tailors master LaTeX resumes to job descriptions with a self-healing pdflatex compilation loop, multi-LLM support (OpenAI, Gemini, Claude, Groq, Ollama), and TeX code-injection security.",
+        "AI Resume Tailoring Platform deployed on Render that tailors master LaTeX resumes to job descriptions with a self-healing pdflatex compilation loop, multi-LLM support (OpenAI, Gemini, Claude, Groq, Ollama), and security hardening against TeX code injection.",
       href: "https://tailor-resume-nizl.onrender.com/",
       github: "https://github.com/Vamshi-Birru",
       live: "https://tailor-resume-nizl.onrender.com/",
-      tags: ["Java 17", "Spring Boot 3", "PostgreSQL", "Docker", "Flyway", "LLM", "LaTeX"],
+      tags: [
+        "Java 17",
+        "Spring Boot 3",
+        "PostgreSQL",
+        "Docker",
+        "Flyway",
+        "LLM",
+        "LaTeX",
+        "JWT",
+      ],
       featured: true,
       badge: "Live Project",
-    },
-    {
-      title: "Distributed Job Orchestrator",
-      brief:
-        "Distributed orchestration service built from scratch at Flipkart to schedule Java Spark workloads on GCP Dataproc, supporting 1,000+ executions/day with a 10s self-healing reconciler.",
-      href: "/experience",
-      github: "https://github.com/Vamshi-Birru",
-      tags: ["Java Spark", "GCP Dataproc", "Distributed Systems", "ZooKeeper"],
-      featured: true,
-      badge: "Flipkart Scale",
-    },
-    {
-      title: "Event-Driven Alerting Engine",
-      brief:
-        "Real-time event-driven notification system using Kafka to eliminate manual UI polling and alert stakeholders on validation failures instantly across 3 engineering teams.",
-      href: "/experience",
-      github: "https://github.com/Vamshi-Birru",
-      tags: ["Kafka", "Microservices", "Docker", "Event-Driven"],
-      featured: true,
-      badge: "Flipkart Production",
-    },
-    {
-      title: "Food-Delivery Service",
-      brief:
-        "A food delivery application backend service built with Spring Boot utilizing Apache Kafka PUB/SUB architecture for resilient order event streaming.",
-      href: "https://github.com/Vamshi-Birru/food-delivery-service",
-      github: "https://github.com/Vamshi-Birru/food-delivery-service",
-      tags: ["Spring-Boot", "Apache-Kafka", "Maven", "PostgreSQL"],
-    },
-    {
-      title: "Search Ngin",
-      brief:
-        "A Semantic Search Engine prototype for e-commerce applications using Postgres full-text search and Vector Cosine Similarity.",
-      href: "https://github.com/Vamshi-Birru/search-ngin",
-      github: "https://github.com/Vamshi-Birru/search-ngin",
-      tags: ["Nextjs", "PostgreSQL", "TypeScript", "Vector Search"],
-    },
-    {
-      title: "Crosschat",
-      brief:
-        "A realtime chat application leveraging Redis and Pusher-js for ultra-low latency bi-directional messaging.",
-      href: "https://github.com/Vamshi-Birru/crosschat",
-      github: "https://github.com/Vamshi-Birru/crosschat",
-      tags: ["Nextjs", "Redis", "Pusher-js", "TypeScript"],
+      bullets: [
+        "Built and deployed full-stack platform on Render tailoring master LaTeX resumes to job descriptions via a single OpenAI-compatible client supporting 5 LLM providers (OpenAI, Gemini, Claude, Groq, Ollama).",
+        "Designed self-healing generation loop: compiles with pdflatex, feeds compiler errors back to the model for automatic repair, and trims or expands content to guarantee a single-page PDF.",
+        "Secured pipeline against code injection by blocking TeX primitives (\\write18, --shell-escape, \\openout); added AES-encrypted API keys at rest, stateless JWT auth, and BCrypt hashing with 33 JUnit 5/Mockito tests.",
+        "Optimized for a 512 MB RAM container: capped HikariCP at 3 connections, JdbcTemplate with async background queue for visitor tracking with cached geolocation, Flyway migrations, and scheduled 90-day data purge.",
+      ],
     },
   ],
   links: {
