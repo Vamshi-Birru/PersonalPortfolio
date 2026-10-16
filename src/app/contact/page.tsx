@@ -1,20 +1,23 @@
 "use client";
 
-import { fontBitMap, fontGrot } from "@/lib/fonts";
+import { fontBitMap, fontGrot, fontMono } from "@/lib/fonts";
 import { cn, anim } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
+import { GithubIcon, LinkedinIcon, Mail } from "lucide-react";
+import { SiLeetcode } from "@icons-pack/react-simple-icons";
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
-export default function page() {
+export default function ContactPage() {
     return (
         <motion.div
             initial={anim.initial}
             animate={anim.animate}
             exit={anim.exit}
             transition={anim.transition}
+            className="pb-20"
         >
-            <div className="h-[20vh]"></div>
+            <div className="h-[15vh]"></div>
 
             <div className="flex flex-col justify-center items-center gap-8">
                 <motion.h1
@@ -34,8 +37,13 @@ export default function page() {
                     Contact
                 </motion.h1>
 
+                <p className="text-text-emphasis text-center max-w-md px-4 text-sm sm:text-base">
+                    Feel free to reach out for distributed systems, backend engineering, or collaborative opportunities.
+                </p>
+
                 <div className="flex space-x-4 md:space-x-8">
-                    <Link href="https://github.com/h4-mm-3r" target="_blank">
+                    {/* GitHub */}
+                    <Link href={siteConfig.links.github} target="_blank">
                         <motion.div
                             whileHover={{ scale: 0.9 }}
                             transition={{
@@ -45,19 +53,23 @@ export default function page() {
                                 ease: [0.76, 0, 0.24, 1],
                                 duration: 0.5,
                             }}
-                            className="size-[29vw] sm:size-44 bg-background border-text border-[2px] rounded-xl z-0"
+                            className="size-[26vw] sm:size-40 bg-background border-text border-[2px] rounded-xl z-0 relative flex flex-col justify-center items-center group cursor-pointer"
                         >
                             <motion.div
-                                className="bg-transparent size-[29vw] sm:size-44 absolute z-10 flex justify-center items-center"
-                                whileHover={{ scale: 1.2 }}
+                                className="bg-transparent flex flex-col justify-center items-center gap-2"
+                                whileHover={{ scale: 1.15 }}
                             >
-                                <GithubIcon className="h-7 w-7 sm:h-10 sm:w-10 text-invert-accent-hightlights" />
+                                <GithubIcon className="h-7 w-7 sm:h-9 sm:w-9 text-invert-accent-hightlights group-hover:text-yellow dark:group-hover:text-cyan transition-colors" />
+                                <span className={cn(fontMono.className, "text-[11px] font-bold text-text-secondary")}>
+                                    GitHub
+                                </span>
                             </motion.div>
                         </motion.div>
                     </Link>
 
+                    {/* LinkedIn */}
                     <Link
-                        href="https://www.linkedin.com/in/hemram-kumarapu-440859214"
+                        href={siteConfig.links.linkedin}
                         target="_blank"
                     >
                         <motion.div
@@ -69,18 +81,22 @@ export default function page() {
                                 ease: [0.76, 0, 0.24, 1],
                                 duration: 0.5,
                             }}
-                            className="size-[29vw] sm:size-44 bg-background border-text border-[2px] rounded-xl z-0"
+                            className="size-[26vw] sm:size-40 bg-background border-text border-[2px] rounded-xl z-0 relative flex flex-col justify-center items-center group cursor-pointer"
                         >
                             <motion.div
-                                className="bg-transparent size-[29vw] sm:size-44 absolute z-10 flex justify-center items-center"
-                                whileHover={{ scale: 1.2 }}
+                                className="bg-transparent flex flex-col justify-center items-center gap-2"
+                                whileHover={{ scale: 1.15 }}
                             >
-                                <LinkedinIcon className="h-7 w-7 sm:h-10 sm:w-10 text-invert-accent-hightlights" />
+                                <LinkedinIcon className="h-7 w-7 sm:h-9 sm:w-9 text-invert-accent-hightlights group-hover:text-yellow dark:group-hover:text-cyan transition-colors" />
+                                <span className={cn(fontMono.className, "text-[11px] font-bold text-text-secondary")}>
+                                    LinkedIn
+                                </span>
                             </motion.div>
                         </motion.div>
                     </Link>
 
-                    <Link href="https://x.com/8Hemram" target="_blank">
+                    {/* LeetCode */}
+                    <Link href={siteConfig.links.leetcode} target="_blank">
                         <motion.div
                             whileHover={{ scale: 0.9 }}
                             transition={{
@@ -90,56 +106,72 @@ export default function page() {
                                 ease: [0.76, 0, 0.24, 1],
                                 duration: 0.5,
                             }}
-                            className="size-[29vw] sm:size-44 bg-background border-text border-[2px] rounded-xl z-0"
+                            className="size-[26vw] sm:size-40 bg-background border-text border-[2px] rounded-xl z-0 relative flex flex-col justify-center items-center group cursor-pointer"
                         >
                             <motion.div
-                                className="bg-transparent size-[29vw] sm:size-44 absolute z-10 flex justify-center items-center md:flex "
-                                whileHover={{ scale: 1.2 }}
+                                className="bg-transparent flex flex-col justify-center items-center gap-2"
+                                whileHover={{ scale: 1.15 }}
                             >
-                                <TwitterIcon className="h-7 w-7 sm:h-10 sm:w-10 text-invert-accent-hightlights" />
+                                <SiLeetcode className="h-7 w-7 sm:h-9 sm:w-9 text-invert-accent-hightlights group-hover:text-yellow dark:group-hover:text-cyan transition-colors" />
+                                <span className={cn(fontMono.className, "text-[11px] font-bold text-text-secondary")}>
+                                    LeetCode
+                                </span>
                             </motion.div>
                         </motion.div>
                     </Link>
                 </div>
             </div>
 
-            <div className="h-20"></div>
+            <div className="h-16"></div>
 
-            <div className="flex justify-center items-center">
-                <motion.button
-                    whileHover={{ y: -7, x: -7 }}
-                    whileTap={{ y: 0, x: 0 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                    className="z-10 hidden md:block"
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <div className="relative">
+                    <motion.button
+                        whileHover={{ y: -7, x: -7 }}
+                        whileTap={{ y: 0, x: 0 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                        className="z-10 relative hidden md:block"
+                    >
+                        <a href="mailto:vamshibirru8@gmail.com">
+                            <span
+                                className={cn(
+                                    fontBitMap.className,
+                                    "text-invert-accent-hightlights bg-background-highlights outline outline-text-emphasis p-4 text-xs inline-flex items-center gap-2",
+                                )}
+                            >
+                                <Mail className="w-4 h-4" /> vamshibirru8@gmail.com
+                            </span>
+                        </a>
+                    </motion.button>
+                    <motion.button
+                        whileTap={{ y: [-7, 0], x: [-7, 0] }}
+                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                        className="z-10 relative md:hidden"
+                    >
+                        <a href="mailto:vamshibirru8@gmail.com">
+                            <span
+                                className={cn(
+                                    fontBitMap.className,
+                                    "text-invert-accent-hightlights bg-background-highlights outline p-4 text-xs inline-flex items-center gap-2",
+                                )}
+                            >
+                                <Mail className="w-4 h-4" /> Email Me
+                            </span>
+                        </a>
+                    </motion.button>
+                    <div className="bg-invert-accent-hightlights inset-0 absolute z-0" />
+                </div>
+
+                <Link
+                    href="/Birru_Vamshi_SDE.pdf"
+                    target="_blank"
+                    className={cn(
+                        fontBitMap.className,
+                        "text-xs px-6 py-4 rounded bg-invert-accent-hightlights text-background uppercase hover:opacity-90 transition-opacity",
+                    )}
                 >
-                    <a href="mailto:kuheram777@gmail.com">
-                        <span
-                            className={cn(
-                                fontBitMap.className,
-                                "text-invert-accent-hightlights bg-background-highlights outline outline-text-emphasis p-4",
-                            )}
-                        >
-                            Get in Touch
-                        </span>
-                    </a>
-                </motion.button>
-                <motion.button
-                    whileTap={{ y: [-7, 0], x: [-7, 0] }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                    className="z-10 md:hidden"
-                >
-                    <a href="mailto:kuheram777@gmail.com">
-                        <span
-                            className={cn(
-                                fontBitMap.className,
-                                "text-invert-accent-hightlights bg-background-highlights outline p-4",
-                            )}
-                        >
-                            Get in Touch
-                        </span>
-                    </a>
-                </motion.button>
-                <div className="bg-invert-accent-hightlights w-[228px] h-[50px] absolute z-0" />
+                    View Resume (PDF)
+                </Link>
             </div>
         </motion.div>
     );

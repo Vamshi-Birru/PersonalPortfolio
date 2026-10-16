@@ -8,7 +8,7 @@ export default function ResumeButton() {
   return (
     <div className="relative">
       <Link
-        href="https://drive.google.com/file/d/16T02-bVEIz6guMlm2kYOdpGTdP84ObTE/view?usp=drivesdk"
+        href="/Birru_Vamshi_SDE.pdf"
         target="_blank"
       >
         <motion.button
