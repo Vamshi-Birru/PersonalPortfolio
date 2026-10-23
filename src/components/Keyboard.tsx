@@ -4,31 +4,39 @@ import { useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
-// Map of key node names in key_board.glb to new replacement letters
-// Row 1 (top): K U M A R A P U -> B I R R U [blank] [blank] [blank]
-// Row 2 (bottom): H E M R A M -> V A M S H I
-const KEY_LETTER_MAP: Record<string, string | null> = {
+interface KeyConfig {
+  letter: string | null;
+  textColor: string;
+  keycapColor: string;
+}
+
+// Map of key node names in key_board.glb to replacement letters and explicit high-contrast colors
+// Row 1 (top): B I R R U - Solarized light cream keycaps with deep dark teal text
+// Row 2 (bottom): V A M S H I - Solarized dark teal keycaps with bright golden amber text
+const KEY_CONFIG: Record<string, KeyConfig> = {
   // Row 1: BIRRU
-  K: "B",
-  U: "I",
-  M: "R",
-  A: "R",
-  R: "U",
-  A2: null,
-  P: null,
-  U2: null,
+  K: { letter: "B", textColor: "#002b36", keycapColor: "#fdf6e3" },
+  U: { letter: "I", textColor: "#002b36", keycapColor: "#fdf6e3" },
+  M: { letter: "R", textColor: "#002b36", keycapColor: "#fdf6e3" },
+  A: { letter: "R", textColor: "#002b36", keycapColor: "#fdf6e3" },
+  R: { letter: "U", textColor: "#002b36", keycapColor: "#fdf6e3" },
+  A2: { letter: null, textColor: "#002b36", keycapColor: "#eee8d5" },
+  P: { letter: null, textColor: "#002b36", keycapColor: "#eee8d5" },
+  U2: { letter: null, textColor: "#002b36", keycapColor: "#eee8d5" },
 
   // Row 2: VAMSHI
-  H: "V",
-  E: "A",
-  M2: "M",
-  R2: "S",
-  A3: "H",
-  M3: "I",
-  // Enter key keeps its original "Enter" text
+  H: { letter: "V", textColor: "#ffb703", keycapColor: "#002b36" },
+  E: { letter: "A", textColor: "#ffb703", keycapColor: "#002b36" },
+  M2: { letter: "M", textColor: "#ffb703", keycapColor: "#002b36" },
+  R2: { letter: "S", textColor: "#ffb703", keycapColor: "#002b36" },
+  A3: { letter: "H", textColor: "#ffb703", keycapColor: "#002b36" },
+  M3: { letter: "I", textColor: "#ffb703", keycapColor: "#002b36" },
+
+  // Enter key: warm terracotta orange keycap with deep dark teal text
+  Enter: { letter: null, textColor: "#002b36", keycapColor: "#cb4b16" },
 };
 
-function createLetterTexture(letter: string): THREE.CanvasTexture {
+function createLetterTexture(letter: string, textColor: string): THREE.CanvasTexture {
   const size = 512;
   const canvas = document.createElement("canvas");
   canvas.width = size;
@@ -37,9 +45,10 @@ function createLetterTexture(letter: string): THREE.CanvasTexture {
   if (!ctx) return new THREE.CanvasTexture(canvas);
 
   ctx.clearRect(0, 0, size, size);
-  // Match the deep navy color of the original key legends
-  ctx.fillStyle = "#001825";
-  ctx.font = "900 360px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hack', monospace, sans-serif";
+
+  // High-contrast, large, ultra-bold typography
+  ctx.fillStyle = textColor;
+  ctx.font = "900 420px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hack', monospace, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(letter, size / 2, size / 2);
@@ -54,40 +63,61 @@ export default function KeyBoardHR() {
   const { scene } = useGLTF("/key_board.glb");
 
   useEffect(() => {
-    if (!scene || scene.userData.customized) return;
-    scene.userData.customized = true;
+    if (!scene || scene.userData.customizedColors) return;
+    scene.userData.customizedColors = true;
 
-    // Standard letter plane geometry matching original Blender mesh bounds
-    const basePlane = new THREE.PlaneGeometry(32, 32);
-    basePlane.translate(-31.24, 24.78, 0.25);
+    // Plane geometry matching the original Blender letter bounds and elevation
+    const basePlane = new THREE.PlaneGeometry(36, 36);
+    basePlane.translate(-34.7, 24.8, 0.5);
 
-    Object.entries(KEY_LETTER_MAP).forEach(([keyName, letter]) => {
+    Object.entries(KEY_CONFIG).forEach(([keyName, config]) => {
       const keyNode = scene.getObjectByName(keyName);
       if (!keyNode) return;
 
-      // Find the text child inside this key
-      const textChild = keyNode.children.find(
-        (c) => c.name.startsWith("Text") && c.name !== "Text 2"
+      // 1. Explicitly style the keycap background mesh
+      const keycapChild = keyNode.children.find((c) =>
+        c.name.startsWith("Cube")
+      ) as THREE.Mesh | undefined;
+      if (keycapChild) {
+        keycapChild.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color(config.keycapColor),
+          roughness: 0.35,
+          metalness: 0.05,
+        });
+      }
+
+      // 2. Explicitly style the letter mesh
+      const textChild = keyNode.children.find((c) =>
+        c.name.startsWith("Text")
       ) as THREE.Mesh | undefined;
 
       if (!textChild) return;
 
-      if (!letter) {
+      if (keyName === "Enter") {
+        // Keep original Enter geometry and give it sharp dark teal color
+        textChild.material = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(config.textColor),
+          side: THREE.DoubleSide,
+        });
+        textChild.visible = true;
+        return;
+      }
+
+      if (!config.letter) {
         textChild.visible = false;
         return;
       }
 
-      // Create standard material with crisp canvas texture
-      const texture = createLetterTexture(letter);
-      const letterMaterial = new THREE.MeshStandardMaterial({
+      // High-contrast self-illuminated material for permanent legibility
+      const texture = createLetterTexture(config.letter, config.textColor);
+      const letterMaterial = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
-        roughness: 0.5,
-        metalness: 0,
+        alphaTest: 0.1,
         depthWrite: false,
         polygonOffset: true,
-        polygonOffsetFactor: -1,
-        polygonOffsetUnits: -1,
+        polygonOffsetFactor: -3,
+        polygonOffsetUnits: -3,
         side: THREE.DoubleSide,
       });
 

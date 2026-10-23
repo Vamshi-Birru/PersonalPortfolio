@@ -95,6 +95,7 @@ export default function KeyboardCanvas() {
             enableZoom={false}
             autoRotate={true}
           />
+          <ambientLight intensity={1.2} />
           <directionalLight position={[Math.sqrt(3), 0, 1]} intensity={2} />
           <directionalLight position={[-Math.sqrt(3), 0, 1]} intensity={2} />
           <directionalLight position={[Math.sqrt(3), -1, -1]} intensity={0.9} />
